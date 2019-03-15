@@ -38,6 +38,7 @@ This example assumes the following setup:
 1. The `MMM-pages` module has been used to define multiple pages
 2. The first page contains an instance of the `clock` module
 3. The second page contains an instance of the `MMM-SimpleLogo` module
+4. The `alert` module is activated to show user notifications
 
 ````javascript
 modules: [
@@ -54,6 +55,13 @@ modules: [
         }
     },
     {
+        module: "alert",
+        config: {
+            display_time: 2000,
+            position: "left"
+        }
+    },
+    {
         module: 'MMM-pages',
         config: {
             modules: [ ["clock" ], ["MMM-SimpleLogo"], ]
@@ -64,8 +72,14 @@ modules: [
 ````
 The configuration below will define 2 custom notifications:
 
-1. `SHOW_CAT`: switch `MMM-pages` to the second page and display `cat.jpg` in `MMM-SimpleLogo`
-2. `SHOW_DOG`: switch `MMM-pages` to the second page and display `dog.jpg` in `MMM-SimpleLogo`
+1. Perform the following actions upon receiving the custom notification `SHOW_CAT`:
+* Switch `MMM-pages` to the second page
+* Display `cat.jpg` in `MMM-SimpleLogo`
+* Send the message notification `Meow` to the `alert` module
+2. Perform the following actions upon receiving the custom notification `SHOW_DOG`:
+* Switch `MMM-pages` to the second page
+* Display `dog.jpg` in `MMM-SimpleLogo`
+* Send the message notification `Woof` to the `alert` module
 
 ````javascript
     {
@@ -82,6 +96,13 @@ The configuration below will define 2 custom notifications:
                         fileUrl: "cat.jpg",
                         width: '700px'
                     }
+                },
+                {
+                    notification: "SHOW_ALERT",
+                    payload: {
+                        title: "Meow",
+                        type: "notification"
+                    }
                 }
             ],
            'SHOW_DOG': [
@@ -94,6 +115,13 @@ The configuration below will define 2 custom notifications:
                     payload: {
                         fileUrl: "dog.jpg",
                         width: '500px'
+                    }
+                },
+                {
+                    notification: "SHOW_ALERT",
+                    payload: {
+                        title: "Woof",
+                        type: "notification"
                     }
                 }
             ],
