@@ -1,15 +1,15 @@
 # MMM-EventProxy
 
 ## Synopsis
-`MMM-EventProxy` is a MagicMirror² Module which can be used to create custom notifications which can trigger one or more other notifications.
+`MMM-EventProxy` is a MagicMirror² Module which can be used to create custom notifications which can trigger multiple notifications or shell commands.
 
 ## Usage Scenario
 
-Many MagicMirror² modules can be configured to send a notification event when a certain criteria is met.  However, in some scenarios it may be desirable to send more than one notification when this criteria is met.  `MMM-EventProxy` can be used to achieve this.
+Many MagicMirror² modules can be configured to send a notification event whenever a specific criteria is met.  However, in some scenarios it may be desirable to do trigger multiple additional notifications or execute shell commands when this criteria is met.  `MMM-EventProxy` can be used to achieve this.
 
 ## Configuration
 
-Configuration of `MMM-EventProxy` is relatively straight-forward:
+Configuration of `MMM-EventProxy` is relatively straight-forward.  Simply define a list of custom events to listen to and specify the notifications and/or commands which should be triggered whenever the notification is received:
 ````javascript
 {
     module: 'MMM-EventProxy',
@@ -17,11 +17,15 @@ Configuration of `MMM-EventProxy` is relatively straight-forward:
         'CUSTOM_EVENT1': [
                 {
                         notification: "NOTIFICATION_A",
-                        payload: "PAYLOAD_A"
+                        payload: "PAYLOAD_A",
+                        command: "COMMAND_A"
                 },
                 {
                         notification: "NOTIFICATION_B",
-                        payload: "PAYLOAD_B"
+                        payload: "PAYLOAD_B",
+                },
+                {
+                        command: "COMMAND_C"
                 }
                 ...
         ],
@@ -29,7 +33,14 @@ Configuration of `MMM-EventProxy` is relatively straight-forward:
     }
 }
 ````
-This will cause `MMM-EventProxy` to listen for the notification `CUSTOM_EVENT1`.  Whenever this notification event is received, `MMM-EventProxy` will send two new notification events with the specified payloads.
+This will cause `MMM-EventProxy` to listen for the notification `CUSTOM_EVENT1`.  Whenever this notification event is received, `MMM-EventProxy` will perform the following actions:
+
+* Send `NOTIFICATION_A` with payload `PAYLOAD_A`
+* Execute `COMMAND_A`
+* Send `NOTIFICATION_B` with payload `PAYLOAD_B`
+* Execute `COMMAND_C`
+
+Note that actions may contain a single notification, a single command, or both.
 
 ## Example
 
@@ -76,10 +87,12 @@ The configuration below will define 2 custom notifications:
    * Switch `MMM-pages` to the second page
    * Display `cat.jpg` in `MMM-SimpleLogo`
    * Send the message notification `Meow` to the `alert` module
+   * Execute the command `aplay meow.wav`
 2. Perform the following actions upon receiving the custom notification `SHOW_DOG`:
    * Switch `MMM-pages` to the second page
    * Display `dog.jpg` in `MMM-SimpleLogo`
    * Send the message notification `Woof` to the `alert` module
+   * Execute the command `aplay woof.wav`
 
 ````javascript
     {
@@ -102,7 +115,8 @@ The configuration below will define 2 custom notifications:
                     payload: {
                         title: "Meow",
                         type: "notification"
-                    }
+                    },
+                    command: "aplay meow.wav"
                 }
             ],
            'SHOW_DOG': [
@@ -122,7 +136,8 @@ The configuration below will define 2 custom notifications:
                     payload: {
                         title: "Woof",
                         type: "notification"
-                    }
+                    },
+                    command: "aplay woof.wav"
                 }
             ],
         }
