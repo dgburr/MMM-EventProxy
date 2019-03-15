@@ -73,13 +73,13 @@ modules: [
 The configuration below will define 2 custom notifications:
 
 1. Perform the following actions upon receiving the custom notification `SHOW_CAT`:
-* Switch `MMM-pages` to the second page
-* Display `cat.jpg` in `MMM-SimpleLogo`
-* Send the message notification `Meow` to the `alert` module
+   * Switch `MMM-pages` to the second page
+   * Display `cat.jpg` in `MMM-SimpleLogo`
+   * Send the message notification `Meow` to the `alert` module
 2. Perform the following actions upon receiving the custom notification `SHOW_DOG`:
-* Switch `MMM-pages` to the second page
-* Display `dog.jpg` in `MMM-SimpleLogo`
-* Send the message notification `Woof` to the `alert` module
+   * Switch `MMM-pages` to the second page
+   * Display `dog.jpg` in `MMM-SimpleLogo`
+   * Send the message notification `Woof` to the `alert` module
 
 ````javascript
     {
